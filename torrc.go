@@ -1,3 +1,34 @@
+// Package torrc provides a simple way to read, edit, and write torrc files.
+//
+// It takes a torrc file and parses it into a TorRC structure, which can be
+// manipulated and then written back to a file.
+//
+// Example(set up an I2P Bridge Client):
+//
+//	torrc, err := ReadTorRC("torrc.test")
+//	if err != nil {
+//		panic(err)
+//	}
+//	torrc.SetField("UseBridges", []string{"1"})
+//	torrc.SetField("Bridge", []string{"i2p", "i2pbase32addressesarefiftytwocharacterslongenoughok.b32.i2p"})
+//	torrc.SetField("ClientTransportPlugin", []string{"i2p", "exec", "i2p-client"})
+//	if err = torrc.Write("torrc.test.i2p-client"); err != nil {
+//		panic(err)
+//	}
+//
+// Example(set up an I2P Bridge Server):
+//
+//	torrc, err := ReadTorRC("torrc.test")
+//	if err != nil {
+//		panic(err)
+//	}
+//	torrc.SetField("BridgeRelay", []string{"1"})
+//	torrc.SetField("ORPort", []string{"9001"})
+//	torrc.SetField("ExtORPort", []string{"7689"})
+//	torrc.SetField("ServerTransportPlugin", []string{"i2p", "exec", "i2p-server"})
+//	if err = torrc.Write("torrc.test.i2p-server"); err != nil {
+//		panic(err)
+//	}
 package torrc
 
 import (
