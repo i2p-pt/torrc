@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>I2P Pluggable Transport</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">I2P Pluggable Transport</h1>
+</header>
+<h1 id="torrc">torrc</h1>
+<p><a href="http://pkg.go.dev/github.com/i2p-pt/torrc"><img src="https://img.shields.io/badge/pkg.go.dev-doc-blue" alt="GoDoc" /></a> <a href="https://goreportcard.com/report/github.com/i2p-pt/torrc"><img src="https://goreportcard.com/badge/github.com/i2p-pt/torrc" alt="Go Report Card" /></a></p>
+<h2 id="types">Types</h2>
+<h3 id="type-field">type <a href="/field.go#L10">Field</a></h3>
+<p><code>type Field struct { ... }</code></p>
+<p>Field is a structure that holds one line of a TorRC file.</p>
+<h4 id="func-field-compare">func (*Field) <a href="/field.go#L71">Compare</a></h4>
+<p><code>func (f *Field) Compare(name string) bool</code></p>
+<p>Compare matches a name, whether it is commented out or not.</p>
+<h4 id="func-field-get">func (*Field) <a href="/field.go#L16">Get</a></h4>
+<p><code>func (f *Field) Get() []string</code></p>
+<p>Get the value of a field in the TorRC file.</p>
+<h4 id="func-field-getint">func (*Field) <a href="/field.go#L28">GetInt</a></h4>
+<p><code>func (f *Field) GetInt() (int, error)</code></p>
+<p>GetInt returns the value of a field as an integer. If it is a multiple-value field, it returns the first value. If it is not possible to convert the value to an integer, it returns an error.</p>
+<h4 id="func-field-getints">func (*Field) <a href="/field.go#L45">GetInts</a></h4>
+<p><code>func (f *Field) GetInts() ([]int, error)</code></p>
+<p>GetInts returns the values of a field as integers. If it is a multiple-value field, it returns all values. If it is not possible to convert a value to an integer, it returns an error.</p>
+<h4 id="func-field-getstring">func (*Field) <a href="/field.go#L21">GetString</a></h4>
+<p><code>func (f *Field) GetString() string</code></p>
+<p>GetString returns the value of a field as a string.</p>
+<h4 id="func-field-iscomment">func (*Field) <a href="/field.go#L61">IsComment</a></h4>
+<p><code>func (f *Field) IsComment() bool</code></p>
+<p>IsComment returns true if the field is a comment.</p>
+<h4 id="func-field-set">func (*Field) <a href="/field.go#L66">Set</a></h4>
+<p><code>func (f *Field) Set(value []string)</code></p>
+<p>Set the value of a field in the TorRC file.</p>
+<h3 id="type-torrc">type <a href="/torrc.go#L9">TorRC</a></h3>
+<p><code>type TorRC struct { ... }</code></p>
+<p>TorRC is a structure that holds the contents of a torrc file.</p>
+<h4 id="func-torrc-bytes">func (*TorRC) <a href="/torrc.go#L76">Bytes</a></h4>
+<p><code>func (t *TorRC) Bytes() []byte</code></p>
+<p>Bytes returns the TorRC structure as a byte slice.</p>
+<h4 id="func-torrc-getfield">func (*TorRC) <a href="/torrc.go#L24">GetField</a></h4>
+<p><code>func (t *TorRC) GetField(name string) *Field</code></p>
+<p>GetField returns the value of the field with the given name.</p>
+<h4 id="func-torrc-getfieldindex">func (*TorRC) <a href="/torrc.go#L14">GetFieldIndex</a></h4>
+<p><code>func (t *TorRC) GetFieldIndex(name string) int</code></p>
+<p>GetFieldIndex returns the index of the field with the given name.</p>
+<h4 id="func-torrc-getfields">func (*TorRC) <a href="/torrc.go#L33">GetFields</a></h4>
+<p><code>func (t *TorRC) GetFields() []*Field</code></p>
+<p>GetFields returns a slice of all the fields in the TorRC</p>
+<h4 id="func-torrc-getfieldsbyname">func (*TorRC) <a href="/torrc.go#L39">GetFieldsByName</a></h4>
+<p><code>func (t *TorRC) GetFieldsByName(name string) []*Field</code></p>
+<p>GetFieldsByName returns a slice of all the fields in the TorRC matching the given name. This includes all commented-out fields.</p>
+<h4 id="func-torrc-load">func (*TorRC) <a href="/torrc.go#L81">Load</a></h4>
+<p><code>func (t *TorRC) Load(filename string) error</code></p>
+<p>Load takes the path to a torrc file and loads it into the TorRC structure.</p>
+<h4 id="func-torrc-read">func (*TorRC) <a href="/torrc.go#L91">Read</a></h4>
+<p><code>func (t *TorRC) Read(filename string) error</code></p>
+<p>Read takes the path to a TorRC file and loads it into the TorRC structure.</p>
+<h4 id="func-torrc-setfield">func (*TorRC) <a href="/torrc.go#L52">SetField</a></h4>
+<p><code>func (t *TorRC) SetField(name string, value []string)</code></p>
+<p>SetField sets the value of a field in the TorRC structure. If the field is commented out or non-existent, it places a new entry at the end of the torrc file.</p>
+<h4 id="func-torrc-string">func (*TorRC) <a href="/torrc.go#L67">String</a></h4>
+<p><code>func (t *TorRC) String() string</code></p>
+<p>String returns the TorRC structure as a string.</p>
+<h4 id="func-torrc-write">func (*TorRC) <a href="/torrc.go#L96">Write</a></h4>
+<p><code>func (t *TorRC) Write(path string) error</code></p>
+<p>Write writes the TorRC structure to a file specified by path</p>
+<hr />
+<p>Readme created from Go doc with <a href="https://github.com/posener/goreadme">goreadme</a></p>
+</body>
+</html>
