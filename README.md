@@ -11,6 +11,12 @@
 
 Field is a structure that holds one line of a TorRC file.
 
+#### func [NewField](/field.go#L82)
+
+`func NewField(name string, value []string) *Field`
+
+NewField creates a new Field structure.
+
 #### func (*Field) [Compare](/field.go#L71)
 
 `func (f *Field) Compare(name string) bool`
@@ -62,6 +68,19 @@ Set the value of a field in the TorRC file.
 `type TorRC struct { ... }`
 
 TorRC is a structure that holds the contents of a torrc file.
+
+#### func [ParseTorRC](/torrc.go#L101)
+
+`func ParseTorRC(path []byte) (*TorRC, error)`
+
+ParseTorRC takes a byte slice and returns a TorRC structure.
+
+#### func [ReadTorRC](/torrc.go#L124)
+
+`func ReadTorRC(path string) (*TorRC, error)`
+
+ReadTorRC takes the path to a torrc file(or torrc.d file) and returns a TorRC
+structure.
 
 #### func (*TorRC) [Bytes](/torrc.go#L76)
 
