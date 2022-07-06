@@ -114,8 +114,12 @@ func (t *TorRC) Load(filename string) error {
 	if err != nil {
 		return err
 	}
-	t, err = ParseTorRC(data)
-	return err
+	temp, err := ParseTorRC(data)
+	if err != nil {
+		return err
+	}
+	*t = *temp
+	return nil
 }
 
 // Read takes the path to a TorRC file and loads it into the TorRC structure.
