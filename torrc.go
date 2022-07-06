@@ -1,89 +1,41 @@
 package torrc
 
 import (
-	"errors"
 	"io/ioutil"
-	"strconv"
 	"strings"
 )
 
-type Field struct {
-	name  string
-	value []string
-}
-
-func (f *Field) Get() []string {
-	return f.value
-}
-
-func (f *Field) GetString() string {
-	return strings.Join(f.value, " ")
-}
-
-func (f *Field) GetInt() (int, error) {
-	if len(f.value) == 0 {
-		return 0, errors.New("Field is empty")
-	}
-	if len(f.value) > 1 {
-		val, err := strconv.Atoi(f.value[0])
-		if err != nil {
-			return 0, err
-		}
-		return val, errors.New("Field has multiple values")
-	}
-	return strconv.Atoi(f.value[0])
-}
-
-func (f *Field) GetInts() ([]int, error) {
-	if len(f.value) == 0 {
-		return nil, errors.New("Field is empty")
-	}
-	var ints []int
-	for _, v := range f.value {
-		i, err := strconv.Atoi(v)
-		if err != nil {
-			return nil, err
-		}
-		ints = append(ints, i)
-	}
-	return ints, nil
-}
-
-func (f *Field) Set(value ...string) {
-	f.value = value
-}
-
-func (f *Field) Compare(name string) bool {
-	if f.name == name {
-		return true
-	}
-	if strings.ReplaceAll(f.name, "#", "") == name {
-		return true
-	}
-	return false
-}
-
-func NewField(name string, value ...string) *Field {
-	return &Field{name: name, value: value}
-}
-
+// TorRC is a structure that holds the contents of a torrc file.
 type TorRC struct {
 	fields []*Field
 }
 
-func (t *TorRC) GetField(name string) *Field {
-	for _, f := range t.fields {
+// GetFieldIndex returns the index of the field with the given name.
+func (t *TorRC) GetFieldIndex(name string) int {
+	for i, f := range t.fields {
 		if f.Compare(name) {
-			return f
+			return i
 		}
 	}
-	return nil
+	return -1
 }
 
+// GetField returns the value of the field with the given name.
+func (t *TorRC) GetField(name string) *Field {
+	index := t.GetFieldIndex(name)
+	if index == -1 {
+		return nil
+	}
+	return t.fields[index]
+}
+
+// GetFields returns a slice of all the fields in the TorRC
 func (t *TorRC) GetFields() []*Field {
 	return t.fields
 }
 
+// GetFieldsByName returns a slice of all the fields in the TorRC matching
+// the given name. This includes all commented-out fields.
 func (t *TorRC) GetFieldsByName(name string) []*Field {
 	var fields []*Field
 	for _, f := range t.fields {
@@ -94,6 +46,24 @@ func (t *TorRC) GetFieldsByName(name string) []*Field {
 	return fields
 }
 
+// SetField sets the value of a field in the TorRC structure. If the field
+// is commented out or non-existent, it places a new entry at the end of the
+// torrc file.
+func (t *TorRC) SetField(name string, value []string) {
+	index := t.GetFieldIndex(name)
+	if index == -1 {
+		t.fields = append(t.fields, NewField(name, value))
+	} else {
+		if t.fields[index].IsComment() {
+			// if the field is a comment, we need to append, not set
+			t.fields = append(t.fields, NewField(name, value))
+		} else {
+			t.fields[index].Set(value)
+		}
+	}
+}
+
+// String returns the TorRC structure as a string.
 func (t *TorRC) String() string {
 	var str string
 	for _, f := range t.fields {
@@ -102,10 +72,12 @@ func (t *TorRC) String() string {
 	return str
 }
 
+// Bytes returns the TorRC structure as a byte slice.
 func (t *TorRC) Bytes() []byte {
 	return []byte(t.String())
 }
 
+// Load takes the path to a torrc file and loads it into the TorRC structure.
 func (t *TorRC) Load(filename string) error {
 	data, err := ioutil.ReadFile(filename)
 	if err != nil {
@@ -115,14 +87,17 @@ func (t *TorRC) Load(filename string) error {
 	return err
 }
 
+// Read takes the path to a TorRC file and loads it into the TorRC structure.
 func (t *TorRC) Read(filename string) error {
 	return t.Load(filename)
 }
 
+// Write writes the TorRC structure to a file specified by path
 func (t *TorRC) Write(path string) error {
 	return ioutil.WriteFile(path, t.Bytes(), 0644)
 }
 
+// ParseTorRC takes a byte slice and returns a TorRC structure.
 func ParseTorRC(path []byte) (*TorRC, error) {
 	var torrc TorRC
 	lines := strings.Split(string(path), "\n")
@@ -139,12 +114,13 @@ func ParseTorRC(path []byte) (*TorRC, error) {
 		if len(fields) == 0 {
 			continue
 		}
-		torrc.fields = append(torrc.fields, NewField(fields[0], fields[1:]...))
+		torrc.fields = append(torrc.fields, NewField(fields[0], fields[1:]))
 	}
 	return &torrc, nil
-
 }
 
+// ReadTorRC takes the path to a torrc file(or torrc.d file) and returns a TorRC
+// structure.
 func ReadTorRC(path string) (*TorRC, error) {
 	bytes, err := ioutil.ReadFile(path)
 	if err != nil {
