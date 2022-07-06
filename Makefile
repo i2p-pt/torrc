@@ -5,7 +5,12 @@ test:
 	go test -v
 
 readme:
-	goreadme -import-path github.com/i2p-pt/torrc -methods -types -badge-godoc -badge-goreportcard > README.md
+	goreadme -import-path github.com/i2p-pt/torrc \
+		-factories \
+		-methods \
+		-types \
+		-badge-godoc \
+		-badge-goreportcard > README.md
 
 index:
 	pandoc -s -t html \
