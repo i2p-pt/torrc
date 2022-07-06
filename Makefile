@@ -11,4 +11,4 @@ index:
 	pandoc -s -t html \
 		-c ./css/style.css \
 		--highlight-style=tango \
-		--metadata title="I2P Pluggable Transport" -o index.html README.md
+		--metadata title="torrc Editor for Go" -o index.html README.md
