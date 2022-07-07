@@ -1,4 +1,4 @@
-# torrc
+# [torrc](/)
 
 [![GoDoc](https://img.shields.io/badge/pkg.go.dev-doc-blue)](http://pkg.go.dev/github.com/i2p-pt/torrc)
 [![Go Report Card](https://goreportcard.com/badge/github.com/i2p-pt/torrc)](https://goreportcard.com/report/github.com/i2p-pt/torrc)

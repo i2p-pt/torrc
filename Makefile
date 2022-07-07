@@ -10,6 +10,7 @@ readme:
 		-methods \
 		-types \
 		-badge-godoc \
+		-title '[torrc](/)' \
 		-badge-goreportcard > README.md
 
 index:
