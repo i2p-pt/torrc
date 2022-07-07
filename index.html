@@ -138,10 +138,10 @@
 <h3 id="type-torrc">type <a href="/torrc.go#L40">TorRC</a></h3>
 <p><code>type TorRC struct { ... }</code></p>
 <p>TorRC is a structure that holds the contents of a torrc file.</p>
-<h4 id="func-parsetorrc">func <a href="/torrc.go#L132">ParseTorRC</a></h4>
+<h4 id="func-parsetorrc">func <a href="/torrc.go#L136">ParseTorRC</a></h4>
 <p><code>func ParseTorRC(path []byte) (*TorRC, error)</code></p>
 <p>ParseTorRC takes a byte slice and returns a TorRC structure.</p>
-<h4 id="func-readtorrc">func <a href="/torrc.go#L155">ReadTorRC</a></h4>
+<h4 id="func-readtorrc">func <a href="/torrc.go#L159">ReadTorRC</a></h4>
 <p><code>func ReadTorRC(path string) (*TorRC, error)</code></p>
 <p>ReadTorRC takes the path to a torrc file(or torrc.d file) and returns a TorRC structure.</p>
 <h4 id="func-torrc-bytes">func (*TorRC) <a href="/torrc.go#L107">Bytes</a></h4>
@@ -162,7 +162,7 @@
 <h4 id="func-torrc-load">func (*TorRC) <a href="/torrc.go#L112">Load</a></h4>
 <p><code>func (t *TorRC) Load(filename string) error</code></p>
 <p>Load takes the path to a torrc file and loads it into the TorRC structure.</p>
-<h4 id="func-torrc-read">func (*TorRC) <a href="/torrc.go#L122">Read</a></h4>
+<h4 id="func-torrc-read">func (*TorRC) <a href="/torrc.go#L126">Read</a></h4>
 <p><code>func (t *TorRC) Read(filename string) error</code></p>
 <p>Read takes the path to a TorRC file and loads it into the TorRC structure.</p>
 <h4 id="func-torrc-setfield">func (*TorRC) <a href="/torrc.go#L83">SetField</a></h4>
@@ -171,7 +171,7 @@
 <h4 id="func-torrc-string">func (*TorRC) <a href="/torrc.go#L98">String</a></h4>
 <p><code>func (t *TorRC) String() string</code></p>
 <p>String returns the TorRC structure as a string.</p>
-<h4 id="func-torrc-write">func (*TorRC) <a href="/torrc.go#L127">Write</a></h4>
+<h4 id="func-torrc-write">func (*TorRC) <a href="/torrc.go#L131">Write</a></h4>
 <p><code>func (t *TorRC) Write(path string) error</code></p>
 <p>Write writes the TorRC structure to a file specified by path</p>
 <hr />

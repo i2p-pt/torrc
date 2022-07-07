@@ -105,13 +105,13 @@ Set the value of a field in the TorRC file.
 
 TorRC is a structure that holds the contents of a torrc file.
 
-#### func [ParseTorRC](/torrc.go#L132)
+#### func [ParseTorRC](/torrc.go#L136)
 
 `func ParseTorRC(path []byte) (*TorRC, error)`
 
 ParseTorRC takes a byte slice and returns a TorRC structure.
 
-#### func [ReadTorRC](/torrc.go#L155)
+#### func [ReadTorRC](/torrc.go#L159)
 
 `func ReadTorRC(path string) (*TorRC, error)`
 
@@ -155,7 +155,7 @@ the given name. This includes all commented-out fields.
 
 Load takes the path to a torrc file and loads it into the TorRC structure.
 
-#### func (*TorRC) [Read](/torrc.go#L122)
+#### func (*TorRC) [Read](/torrc.go#L126)
 
 `func (t *TorRC) Read(filename string) error`
 
@@ -175,7 +175,7 @@ torrc file.
 
 String returns the TorRC structure as a string.
 
-#### func (*TorRC) [Write](/torrc.go#L127)
+#### func (*TorRC) [Write](/torrc.go#L131)
 
 `func (t *TorRC) Write(path string) error`
 
